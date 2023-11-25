@@ -36,3 +36,23 @@ plt.scatter(x[:,0], x[:,1], c=labels)
 plt.scatter(centers[:,0], centers[:,1], marker='*', s=200, c='#050505')
 plt.show()
 
+#Evaluate clustering results
+# Suma de cuadrados intra-cluster (SSW)
+def ssw(x, labels, centroids):
+    ssw = 0
+    for i in range(len(centroids)):
+        cluster = x[labels == i]
+        ssw += np.sum((cluster - centroids[i])**2)
+    return ssw
+print('SSW:', ssw(x, labels, centroids)) #SSW: 78.94084142614602
+
+# Suma de cuadrados inter-cluster (SSB)
+# Suma de cuadrados inter-cluster (SSB)
+def ssb(x, labels, centroids):
+    ssb = 0
+    mean = np.mean(x, axis=0)
+    for i in range(len(centroids)):
+        cluster = x[labels == i]
+        ssb += len(cluster) * np.sum((centroids[i] - mean)**2)
+    return ssb
+print('SSB',ssb(x, labels, centroids)) #SSB 601.8835585738539
